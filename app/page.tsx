@@ -1,12 +1,14 @@
 'use client'
 import Problem from '@/interfaces/Problem';
-import { Box, FormControl, Input, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { BarChart } from '@mui/x-charts';
 import React, { useEffect, useState } from 'react';
 
 
 const data = {
-  xAxis: [{ data: [0]}],
+
+  xAxis: [{ data: [0], label: ''}],
+  yAxis: [{label: ''}],
   series: [{ data: [0] }],
   height: 300
 };
@@ -66,8 +68,9 @@ export default function Home() {
       ratingNumber.push(ratings.filter((rating) => rating === i).length);
     }
     setPlot({
-      xAxis: [{ data: ratingArray}],
-      series: [{ data: ratingNumber }],
+      xAxis: [{ data: ratingArray, label:'Rating'}],
+      yAxis: [{ label:'Problem solved'}],
+      series: [{ data: ratingNumber}],
       height: 300
     })
   }
@@ -76,8 +79,8 @@ export default function Home() {
       <div className='mx-10'>
         <form onSubmit={handleSubmit}>
           <div className='flex flex-col max-w-80'>
-            <TextField id="standard-basic" value={handle} onChange={handleChange} label="Handle" variant="standard" />
-            <button className="handle-submit my-4">Submit</button>
+            <TextField className='bold' id="standard-basic" value={handle} onChange={handleChange} label="Handle" variant='standard' />
+            <button className="handle-submit my-4">View rating distribution</button>
           </div>
         </form>
         

@@ -6,11 +6,11 @@
 } */
 
 :root {
-  --background: #ffffff;
+  --background: rgb(230, 255, 230);
   --foreground: #171717;
 }
 
-* {
+body {
   background-color: rgb(230, 255, 230);
 }
 
@@ -45,6 +45,10 @@
   background-color: lightblue;
 }
 
+.bold {
+  font-weight: 600;
+  color: black !important;
+}
 
 .header div:hover {
   background-color: lightblue;
