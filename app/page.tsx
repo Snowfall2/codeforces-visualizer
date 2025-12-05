@@ -1,10 +1,11 @@
 'use client'
-import Problem from '@/interfaces/Problem';
 import { TextField } from '@mui/material';
 import { BarChart } from '@mui/x-charts';
 import React, { useEffect, useState } from 'react';
-
-
+import ProblemDistribution from '@/components/ProblemDistribution';
+import Problem from '@/interfaces/problem';
+import { customStorage } from '@/utils/storage';
+import TagDistribution from '@/components/TagDistribution';
 const data = {
 
   xAxis: [{ data: [0], label: ''}],
@@ -15,65 +16,53 @@ const data = {
 export default function Home() {
   const [handle, setHandle] = useState('');
   const [submitHandle, setSubmitHandle] = useState('');
-  const [userData, setUserData] = useState([]);
   const [plot, setPlot] = useState(data);
-  const uniqueProb = new Set();
-  
+  const [loading, setLoading] = useState(false);
+  const [problems, setProblems] = useState<Problem[]>([]);
   useEffect(() => {
-    const fetchData = async () => {
-      let methodName = `user.status?handle=${handle}`;
-      const res = await fetch(`https://codeforces.com/api/${methodName}`);
-      if(res.ok) {
-        const res2 = await res.json();
-        const rawData = res2["result"];
-        setUserData(rawData);
-        const problems = rawData.filter((sub:any) => sub["problem"]["rating"] != null)
-        .map((sub:any) => {
-          const name = sub["problem"]["contestId"]+sub["problem"]["index"];
-          if(uniqueProb.has(name)) return null;
-          else {
-            uniqueProb.add(name);
-            return {
-              name: (sub["problem"]["contestId"]+sub["problem"]["index"]).toString(),
-              rating: sub["problem"]["rating"],
-              tags: sub["problem"]["tags"],
-            } as Problem;
+      const fetchData = async () => {
+          const methodName = `user.status?handle=${submitHandle}`;
+          const updateFetch = `https://codeforces.com/api/${methodName}`;
+          console.log(customStorage.isExpire(submitHandle));
+          try {
+            setLoading(true);
+            if(customStorage.isExpire(submitHandle)) {
+                const json = await fetch(updateFetch).then(res => res.json());
+                if(json.status == "OK") {
+                    const rawData = json.result;
+                    const problems = rawData.map((sub:any) => {
+                        return {
+                            name: (sub["problem"]["contestId"]+sub["problem"]["index"]).toString(),
+                            rating: sub["problem"]["rating"],
+                            tags: sub["problem"]["tags"],
+                            verdict: sub["verdict"],
+                        } as Problem;
+                    }).filter((sub:any) => sub != null);
+                    customStorage.updateItem(submitHandle, problems);
+                }
+            }
+            const displayProblems = customStorage.getItem(submitHandle);
+            setProblems(displayProblems);
           }
-        }).filter((sub:any) => sub != null);
-        handleSetPlot(problems);
-      }
-      else {
-        console.log("Error");
-      }
-    };
-    if(submitHandle != '') {
+          catch {
+            setProblems([] as Problem[]);
+          }
+          finally {
+            setLoading(false);
+          }
+      };
+      if(submitHandle != '')
       fetchData();
-    }
   }, [submitHandle]);
-  
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
       setHandle(e.target.value);
   } 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitHandle(handle)
+    setSubmitHandle(handle);
   }
 
-  function handleSetPlot(data:Problem[]) {
-    const ratings = data.map((problem) => problem["rating"])
-    const ratingArray = [];
-    const ratingNumber = [];
-    for(let i = Math.min(...ratings);i <= Math.max(...ratings);i += 100) {
-      ratingArray.push(i);
-      ratingNumber.push(ratings.filter((rating) => rating === i).length);
-    }
-    setPlot({
-      xAxis: [{ data: ratingArray, label:'Rating'}],
-      yAxis: [{ label:'Problem solved'}],
-      series: [{ data: ratingNumber}],
-      height: 300
-    })
-  }
 
   return (
       <div className='mx-10'>
@@ -83,10 +72,25 @@ export default function Home() {
             <button className="handle-submit my-4">View rating distribution</button>
           </div>
         </form>
+        {loading && <h1 className='text-center'>Loading</h1>}
+
+        {!loading && problems.length == 0 && submitHandle != '' && <h1 className='text-center'>Handle {submitHandle} not found</h1>}
+        {!loading && problems.length != 0 && submitHandle != '' && <h1 className='text-center'>{submitHandle} data</h1>}
         
-        <div className='max-w-200'>
-          {submitHandle != '' && <BarChart {...plot}></BarChart>}
-        </div>
+        {!loading && problems.length != 0 &&
+          <>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+              <ProblemDistribution problems={problems} />
+              <TagDistribution problems={problems}/>
+              {/* {submitHandle != '' && <BarChart {...plot}></BarChart>}
+              {submitHandle != '' && <BarChart {...plot}></BarChart>} */}
+            </div>
+            <div className='grid grid-cols-1 md:grid-cols-1 gap-4'>
+              <TagDistribution problems={problems}/>
+            </div>
+          </>
+        }
       </div>
+    
   );
 }
