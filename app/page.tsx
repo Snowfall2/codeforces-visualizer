@@ -72,22 +72,26 @@ export default function Home() {
             <button className="handle-submit my-4">View rating distribution</button>
           </div>
         </form>
-        {loading && <h1 className='text-center'>Loading</h1>}
 
-        {!loading && problems.length == 0 && submitHandle != '' && <h1 className='text-center'>Handle {submitHandle} not found</h1>}
-        {!loading && problems.length != 0 && submitHandle != '' && <h1 className='text-center'>{submitHandle} data</h1>}
-        
-        {!loading && problems.length != 0 &&
-          <>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-              <ProblemDistribution problems={problems} />
-              <TagDistribution problems={problems}/>
-              {/* {submitHandle != '' && <BarChart {...plot}></BarChart>}
-              {submitHandle != '' && <BarChart {...plot}></BarChart>} */}
-            </div>
-            <div className='grid grid-cols-1 md:grid-cols-1 gap-4'>
-              <TagDistribution problems={problems}/>
-            </div>
+
+        {loading ? <div className="flex justify-center h-full">
+          <span className="loader h-screen translate-y-100"></span>
+        </div>: <>
+            {!loading && problems.length == 0 && submitHandle != '' && <h1 className='text-center'>Handle {submitHandle} not found</h1>}
+            {!loading && problems.length != 0 && submitHandle != '' && <h1 className='text-center'>{submitHandle} data</h1>}
+            {!loading && problems.length != 0 &&
+              <>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                  <ProblemDistribution problems={problems} />
+                  <TagDistribution problems={problems}/>
+                  {/* {submitHandle != '' && <BarChart {...plot}></BarChart>}
+                  {submitHandle != '' && <BarChart {...plot}></BarChart>} */}
+                </div>
+                <div className='grid grid-cols-1 md:grid-cols-1 gap-4'>
+                  <TagDistribution problems={problems}/>
+                </div>
+              </>
+            }
           </>
         }
       </div>
