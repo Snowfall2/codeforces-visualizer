@@ -3,4 +3,5 @@ export default interface Problem {
     rating: number; 
     tags: string[];
     verdict?: string;
+    creationTimeSeconds: number;
 }

@@ -6,6 +6,7 @@ import ProblemDistribution from '@/components/ProblemDistribution';
 import Problem from '@/interfaces/problem';
 import { customStorage } from '@/utils/storage';
 import TagDistribution from '@/components/TagDistribution';
+import MonthSummary from '@/components/MonthSummary';
 const data = {
 
   xAxis: [{ data: [0], label: ''}],
@@ -36,6 +37,7 @@ export default function Home() {
                             rating: sub["problem"]["rating"],
                             tags: sub["problem"]["tags"],
                             verdict: sub["verdict"],
+                            creationTimeSeconds: sub["creationTimeSeconds"],
                         } as Problem;
                     }).filter((sub:any) => sub != null);
                     customStorage.updateItem(submitHandle, problems);
@@ -69,7 +71,7 @@ export default function Home() {
         <form onSubmit={handleSubmit}>
           <div className='flex flex-col max-w-80'>
             <TextField className='bold' id="standard-basic" value={handle} onChange={handleChange} label="Handle" variant='standard' />
-            <button className="handle-submit my-4">View rating distribution</button>
+            <button className="handle-submit my-4">View overall statistics</button>
           </div>
         </form>
 
@@ -83,7 +85,7 @@ export default function Home() {
               <>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                   <ProblemDistribution problems={problems} />
-                  <TagDistribution problems={problems}/>
+                  <MonthSummary problems={problems}/>
                   {/* {submitHandle != '' && <BarChart {...plot}></BarChart>}
                   {submitHandle != '' && <BarChart {...plot}></BarChart>} */}
                 </div>
