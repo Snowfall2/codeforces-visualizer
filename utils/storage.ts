@@ -11,7 +11,6 @@ export const customStorage = (() => {
             value,
             expiryTime: Date.now() + expireTime,
         }
-        console.log(storage)
         return storage[key];
     }
     

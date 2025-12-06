@@ -1,13 +1,21 @@
 'use client'
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
-    // const []
-
+    const pathname = usePathname();
     const toggleMenu = () => {
         setIsOpen(!isOpen);
+    };
+    const getLinkClass = (path: string) => {
+        const base = "header mx-2 p-2 rounded-md transition duration-300 cursor-pointer";
+        const isActive = pathname == path; 
+        
+        return isActive ?
+            `${base} text-yellow-400 font-bold bg-gray-800` 
+            : `${base} text-white hover:text-yellow-200`;
     };
 
     return (
@@ -35,8 +43,8 @@ export default function Header() {
                     ${isOpen ? 'flex flex-col' : 'hidden md:flex'}
                 `}>
                 {/* <Link href="/" className="header mx-2 p-2 rounded-md transition duration-300 text-white hover:text-yellow-200 cursor-pointer">Tag distribution</Link> */}
-                <Link href="/problem" className="header mx-2 p-2 rounded-md transition duration-300 text-white hover:text-yellow-200 cursor-pointer">Problem overview</Link>
-                <Link href="/" className="header mx-2 p-2 rounded-md transition duration-300 text-white hover:text-yellow-200 cursor-pointer">Summary</Link>
+                <Link id="problem" href="/problem"  className={getLinkClass("/problem")}>Problem overview</Link>
+                <Link id="summary" href="/" className={getLinkClass("/")}>Summary</Link>
             </div>
         </header>
     )

@@ -11,7 +11,6 @@ export default function processHandle(
               const methodName = `user.status?handle=${submitHandle}`;
               const updateFetch = `https://codeforces.com/api/${methodName}`;
               setLoading(true);
-              console.log(customStorage.isExpire(submitHandle));
               try {
                 if(customStorage.isExpire(submitHandle)) {
                     const json = await fetch(updateFetch).then(res => res.json());

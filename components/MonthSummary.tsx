@@ -55,12 +55,11 @@ export default function MonthSummary(
         }
 
         targetDate.forEach((date, i) => {
-            let accept = problems.filter(problem => (problem.creationTimeSeconds >= date && problem.verdict == "OK")).length;
-            let reject = problems.filter(problem => (problem.creationTimeSeconds >= date && problem.verdict != "OK")).length;
-            console.log(problems,accept,reject,date)
+            let accept = problems.filter(problem => (problem.creationTimeSeconds >= date && problem.verdict == "Accepted")).length;
+            let reject = problems.filter(problem => (problem.creationTimeSeconds >= date && problem.verdict != "Accepted")).length;
             if(i+1 != targetDate.length) {
-                accept -= problems.filter(problem => (problem.creationTimeSeconds >= targetDate[i+1] && problem.verdict == "OK")).length;
-                reject -= problems.filter(problem => (problem.creationTimeSeconds >= targetDate[i+1] && problem.verdict != "OK")).length;
+                accept -= problems.filter(problem => (problem.creationTimeSeconds >= targetDate[i+1] && problem.verdict == "Accepted")).length;
+                reject -= problems.filter(problem => (problem.creationTimeSeconds >= targetDate[i+1] && problem.verdict != "Accepted")).length;
             }
             monthAcceptNumber.push(accept);
             monthRejectNumber.push(reject);

@@ -1,10 +1,7 @@
 'use client'
-import { TextField } from '@mui/material';
-import { BarChart } from '@mui/x-charts';
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ProblemDistribution from '@/components/ProblemDistribution';
 import Problem from '@/interfaces/problem';
-import { customStorage } from '@/utils/storage';
 import TagDistribution from '@/components/TagDistribution';
 import MonthSummary from '@/components/MonthSummary';
 import processHandle from '@/hooks/processHandle';
