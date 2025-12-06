@@ -67,8 +67,7 @@ export default function MonthSummary(
         })
 
         setPlot({
-            xAxis: [{id: 'barCategories', data: targetMonth, tickLabelStyle: {
-            }}],
+            xAxis: [{id: 'barCategories', data: targetMonth, label:"Month/Year"}],
             yAxis: [{ label:'Problem solved'}],
             series: [{ label: 'Accepted', data: monthAcceptNumber, xAxisId: 'barCategories'}, { label: 'Rejected', data: monthRejectNumber, xAxisId: 'barCategories'}],
             height: 300,
@@ -77,7 +76,7 @@ export default function MonthSummary(
 
     return (
         problems.length > 0 ? (
-        <PlotToolbar title={"Month Submission"} >
+        <PlotToolbar title={"Last 12 Month Submission"} >
             <BarChart {...plot}/>
         </PlotToolbar>) : null
     );
