@@ -14,7 +14,6 @@ export default function Home() {
   const [problems, setProblems] = useState<Problem[]>([]);
   
   processHandle(setLoading, setProblems, submitHandle);
-  console.log(loading,problems)
   return (
       <div className='xl:mx-10 mx-10'>
         <SubmitHandle setSubmitHandle={setSubmitHandle} displayButton='summary'/>

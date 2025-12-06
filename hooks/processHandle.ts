@@ -35,7 +35,6 @@ export default function processHandle(
                 setProblems(displayProblems);
               }
               catch (e: any) {
-                console.log(e);
                 setProblems([] as Problem[]);
               }
               finally {
