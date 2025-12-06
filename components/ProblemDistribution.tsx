@@ -1,6 +1,4 @@
 import Problem from "@/interfaces/problem";
-import { customStorage } from "@/utils/storage";
-import { Stack, Typography } from "@mui/material";
 import { BarChart } from '@mui/x-charts';
 import { useEffect, useState } from "react";
 import PlotToolbar from "./PlotToolbar";

@@ -19,7 +19,7 @@ export default function processHandle(
                         const problems = rawData.map((sub:any, numSub:number) => {
                             return {
                                 id: numSub,
-                                name: (sub["problem"]["contestId"]).toString(),
+                                name: (sub["problem"]["contestId"]? sub["problem"]["contestId"]:sub["problem"]["problemsetName"]).toString(),
                                 index: (sub["problem"]["index"]).toString(),
                                 fullName: sub["problem"]["name"],
                                 rating: sub["problem"]["rating"],
@@ -34,7 +34,8 @@ export default function processHandle(
                 const displayProblems = customStorage.getItem(submitHandle);
                 setProblems(displayProblems);
               }
-              catch {
+              catch (e: any) {
+                console.log(e);
                 setProblems([] as Problem[]);
               }
               finally {

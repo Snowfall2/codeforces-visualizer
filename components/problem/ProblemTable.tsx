@@ -76,6 +76,7 @@ export default function ProblemTable({problems}: {problems: Problem[]}) {
             initialState={{ pagination: { paginationModel } }}
             pageSizeOptions={[5, 10, 20]}
             disableColumnSelector
+            disableColumnResize
             sx={{
                 overflowX: 'scroll',
                 backgroundColor: '#fff9eaff',

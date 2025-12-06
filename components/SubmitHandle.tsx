@@ -22,12 +22,11 @@ export default function SubmitHandle({
     setSubmitHandle(handle);
   }
 
-
   return (
       <form onSubmit={handleSubmit}>
         <div className='flex flex-col max-w-80'>
           <TextField className='bold' id="standard-basic" value={handle} onChange={handleChange} label="Codeforces Handle" variant='standard' />
-          <button className="handle-submit my-4">View {displayButton}</button>
+          <button className="handle-submit my-4 cursor-pointer">View {displayButton}</button>
         </div>
       </form>
   );
