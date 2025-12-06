@@ -15,7 +15,7 @@ export default function ProblemPage() {
     
     return (
       <div className='xl:mx-10 mx-10'>
-        <SubmitHandle setSubmitHandle={setSubmitHandle} displayButton='summary'/>
+        <SubmitHandle setSubmitHandle={setSubmitHandle} displayButton='submission history'/>
         {loading ? <Loading loading={loading}/>: <>
             {!loading && problems.length == 0 && submitHandle != '' && <h1 className='text-center'>Handle {submitHandle} not found</h1>}
             {!loading && problems.length != 0 && submitHandle != '' && <h1 className='text-center'>{submitHandle} data</h1>}
