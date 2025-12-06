@@ -42,10 +42,9 @@ export default function TagDistribution(
         const tags = [...new Set(problems.map((problem) => (
             problem.tags.flat()
         )).flat())]
-        console.log(problems)
         tags.forEach((tag) => {
-            tagAcceptNumber.push(problems.filter(problem => (problem.tags.includes(tag) && problem.verdict == "OK")).length)
-            tagRejectNumber.push(problems.filter(problem => (problem.tags.includes(tag) && problem.verdict != "OK")).length)
+            tagAcceptNumber.push(problems.filter(problem => (problem.tags.includes(tag) && problem.verdict == "Accepted")).length)
+            tagRejectNumber.push(problems.filter(problem => (problem.tags.includes(tag) && problem.verdict != "Accepted")).length)
         })
         console.log(tags)
         tags

@@ -4,7 +4,7 @@ export default function filterProblem(data: Problem[], verdict: string[]) {
     const uniqueProb = new Map();
     const submissions = data.filter((problem:Problem) => (problem["rating"] != null && verdict.includes(problem["verdict"]? problem["verdict"]: "")))
         .map((problem:Problem) => {
-        const name = problem["name"];
+        const name = problem["id"];
         if(uniqueProb.has(name)) {
             const verdict = uniqueProb.get(name).verdict;
             if(verdict != "OK") {
@@ -23,5 +23,29 @@ export default function filterProblem(data: Problem[], verdict: string[]) {
         }
         return problems;
     }, [] as Problem[]);
-    return problemDistribution;
+    return mapVerdict(problemDistribution);
+}
+
+function mapVerdict(data: Problem[]) {
+    const label: Record<string, string> = {
+        "FAILED":"Failed",
+        "OK":"Accepted",
+        "PARTIAL":"Partial score",
+        "COMPILATION_ERROR":"Compilation Error",
+        "RUNTIME_ERROR":"Runtime Error",
+        "WRONG_ANSWER":"Wrong Answer",
+        "TIME_LIMIT_EXCEEDED":"Time Limit Exceeded",
+        "MEMORY_LIMIT_EXCEEDED":"Memory Limit Exceeded",
+        "IDLENESS_LIMIT_EXCEEDED":"Idleness Limit Exceeded",
+        "SECURITY_VIOLATED":"Security Violated",
+        "CRASHED":"Crashed",
+        "INPUT_PREPARATION_CRASHED":"Input Preparation Crashed",
+        "CHALLENGED":"Challenged",
+        "SKIPPED":"Skipped",
+        "TESTING":"Testing",
+        "REJECTED":"Rejected",
+        "SUBMITTED":"Submitted",
+        "NO_VERDICT":"",
+    }
+    return data.map(prob => ({...prob, verdict: label[prob.verdict? prob.verdict:"NO_VERDICT"]}))
 }

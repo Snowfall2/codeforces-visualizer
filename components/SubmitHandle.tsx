@@ -26,7 +26,7 @@ export default function SubmitHandle({
   return (
       <form onSubmit={handleSubmit}>
         <div className='flex flex-col max-w-80'>
-          <TextField className='bold' id="standard-basic" value={handle} onChange={handleChange} label="Handle" variant='standard' />
+          <TextField className='bold' id="standard-basic" value={handle} onChange={handleChange} label="Codeforces Handle" variant='standard' />
           <button className="handle-submit my-4">View {displayButton}</button>
         </div>
       </form>

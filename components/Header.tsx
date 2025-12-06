@@ -4,11 +4,12 @@ import { useState } from "react";
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
+    // const []
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
-    
+
     return (
         <header className="mx-auto py-4 px-8 mb-10 flex justify-between items-center flex-wrap bg-gray-900">
             <div className="logo">
@@ -33,7 +34,7 @@ export default function Header() {
                     overflow-hidden
                     ${isOpen ? 'flex flex-col' : 'hidden md:flex'}
                 `}>
-                <Link href="/" className="header mx-2 p-2 rounded-md transition duration-300 text-white hover:text-yellow-200 cursor-pointer">Tag distribution</Link>
+                {/* <Link href="/" className="header mx-2 p-2 rounded-md transition duration-300 text-white hover:text-yellow-200 cursor-pointer">Tag distribution</Link> */}
                 <Link href="/problem" className="header mx-2 p-2 rounded-md transition duration-300 text-white hover:text-yellow-200 cursor-pointer">Problem overview</Link>
                 <Link href="/" className="header mx-2 p-2 rounded-md transition duration-300 text-white hover:text-yellow-200 cursor-pointer">Summary</Link>
             </div>

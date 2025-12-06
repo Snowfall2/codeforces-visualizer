@@ -45,6 +45,17 @@ body {
   background-color: lightblue;
 }
 
+
+.problem-redirect {
+  background-color: lightblue;
+  transition: all 0.2s;
+}
+.problem-redirect:hover {
+  background-color: rgb(29, 183, 29);
+  transition: all 0.2s;
+}
+
+
 .bold {
   font-weight: 600;
   color: black !important;
