@@ -18,8 +18,8 @@ export default function processHandle(
                         const rawData = json.result;
                         const problems = rawData.map((sub:any, numSub:number) => {
                             return {
-                                id: numSub,
-                                name: (sub["problem"]["contestId"]? sub["problem"]["contestId"]:sub["problem"]["problemsetName"]).toString(),
+                                id: sub["id"],
+                                contest: (sub["problem"]["contestId"]? sub["problem"]["contestId"]:sub["problem"]["problemsetName"]).toString(),
                                 index: (sub["problem"]["index"]).toString(),
                                 fullName: sub["problem"]["name"],
                                 rating: sub["problem"]["rating"],
@@ -28,6 +28,7 @@ export default function processHandle(
                                 creationTimeSeconds: sub["creationTimeSeconds"],
                             } as Problem;
                         }).filter((sub:any) => sub != null);
+                        console.log(problems);
                         customStorage.updateItem(submitHandle, problems);
                     }
                 }

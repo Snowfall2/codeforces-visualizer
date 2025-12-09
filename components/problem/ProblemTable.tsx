@@ -22,8 +22,22 @@ const getVerdictClass = (verdict: string) => {
 };
 
 const columns: GridColDef[] = [
+  {
+    field: 'id', headerName: 'Submission ID', minWidth: 100, flex: 0.5,
+    renderCell: (params: GridRenderCellParams) => {
+       const onClick = (e: React.MouseEvent) => {
+         e.stopPropagation();
+       };
+    
+       return (
+        <a href={`https://codeforces.com/contest/${params.row.contest}/submission/${params.row.id}`} className='underline text-blue-600' onClick={onClick} target="_blank">
+          {params.row.id}
+        </a>
+        )
+    }
+  },
   { field: 'subTime', headerName: 'Submission Time', minWidth: 180, flex: 1, valueGetter: ((value, row) => (new Date(row.creationTimeSeconds * 1000).toLocaleString())) },
-  { field: 'shortName', headerName: 'Index', minWidth: 80, flex:0.5, valueGetter: ((value, row) => (row.name + row.index))},
+  { field: 'shortName', headerName: 'Index', minWidth: 80, flex:0.5, valueGetter: ((value, row) => (row.contest + row.index))},
   { field: 'fullName', headerName: 'Problem Name', minWidth: 200, flex: 2 },
   {
     field: 'verdict',
@@ -47,7 +61,7 @@ const columns: GridColDef[] = [
        };
     
        return (
-        <a href={`https://codeforces.com/contest/${params.row.name}/problem/${params.row.index}`} className='w-full flex justify-center' onClick={onClick} target="_blank">
+        <a href={`https://codeforces.com/contest/${params.row.contest}/problem/${params.row.index}`} className='w-full flex justify-center' onClick={onClick} target="_blank">
             <div className='problem-redirect px-5 justify-center items-center rounded-lg transition duration-300 text-black hover:text-yellow-200 cursor-pointer'>
                 Open problem
             </div>
@@ -77,6 +91,7 @@ export default function ProblemTable({problems}: {problems: Problem[]}) {
             pageSizeOptions={[5, 10, 20]}
             disableColumnSelector
             disableColumnResize
+            disableRowSelectionOnClick
             sx={{
                 overflowX: 'scroll',
                 backgroundColor: '#fff9eaff',

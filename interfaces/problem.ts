@@ -1,6 +1,6 @@
 export default interface Problem {
     id: number;
-    name: string;
+    contest: string;
     index: string;
     fullName?: string;
     rating: number; 
