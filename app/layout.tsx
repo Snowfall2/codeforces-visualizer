@@ -1,5 +1,11 @@
 import Header from "@/components/Header"
+import { Metadata } from "next";
 import './globals.css'
+
+export const metadata: Metadata = {
+  title: "Codeforces Visualizer",
+  description: "Website for showing codeforces statistics",
+};
 export default function PageLayout({
   children,
 }: {
