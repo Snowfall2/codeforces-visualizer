@@ -8,9 +8,9 @@ export default function processHandle(
     submitHandle:string ) {
     useEffect(() => {
           const fetchData = async () => {
+              setLoading(true);
               const methodName = `user.status?handle=${submitHandle}`;
               const updateFetch = `https://codeforces.com/api/${methodName}`;
-              setLoading(true);
               try {
                 if(customStorage.isExpire(submitHandle)) {
                     const json = await fetch(updateFetch).then(res => res.json());
@@ -42,7 +42,9 @@ export default function processHandle(
                 setLoading(false);
               }
           };
-          if(submitHandle != '')
-          fetchData();
+          if(submitHandle != ''){
+            fetchData();
+            localStorage.setItem(submitHandle, submitHandle);
+          }
       }, [submitHandle]);
 }

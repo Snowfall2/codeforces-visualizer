@@ -2,7 +2,8 @@ export const customStorage = (() => {
     const storage = Object();
 
     function getItem(key: string) {
-        return storage[key].value;
+        if(key in storage) return storage[key].value;
+        else return null;
     }
     
     function setItem(key: string, value: JSON) {

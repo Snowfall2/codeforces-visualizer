@@ -42,7 +42,7 @@ export default function Header() {
                     overflow-hidden
                     ${isOpen ? 'flex flex-col' : 'hidden md:flex'}
                 `}>
-                {/* <Link href="/" className="header mx-2 p-2 rounded-md transition duration-300 text-white hover:text-yellow-200 cursor-pointer">Tag distribution</Link> */}
+                <Link id="problem" href="/submission"  className={getLinkClass("/submission")}>Submission overview</Link>
                 <Link id="problem" href="/problem"  className={getLinkClass("/problem")}>Problem overview</Link>
                 <Link id="summary" href="/" className={getLinkClass("/")}>Summary</Link>
             </div>

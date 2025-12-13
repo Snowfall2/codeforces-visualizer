@@ -1,5 +1,5 @@
 'use client'
-import { TextField } from '@mui/material';
+import { Autocomplete, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
 interface SubmitHandleProps {
@@ -25,7 +25,7 @@ export default function SubmitHandle({
   return (
       <form onSubmit={handleSubmit}>
         <div className='flex flex-col max-w-80'>
-          <TextField className='bold' id="standard-basic" value={handle} onChange={handleChange} label="Codeforces Handle" variant='standard' />
+          <TextField className='bold' id="handle-input" value={handle} onChange={handleChange} label="Codeforces Handle" variant='standard' />
           <button className="handle-submit my-4 cursor-pointer">View {displayButton}</button>
         </div>
       </form>
