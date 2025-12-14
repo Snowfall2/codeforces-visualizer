@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Problem from "@/interfaces/problem";
 import { customStorage } from '@/utils/storage';
+import { mapVerdict } from "@/utils/problemUtils";
 
 export default function processHandle(
     setLoading:React.Dispatch<React.SetStateAction<boolean>>,
@@ -8,9 +9,9 @@ export default function processHandle(
     submitHandle:string ) {
     useEffect(() => {
           const fetchData = async () => {
+              setLoading(true);
               const methodName = `user.status?handle=${submitHandle}`;
               const updateFetch = `https://codeforces.com/api/${methodName}`;
-              setLoading(true);
               try {
                 if(customStorage.isExpire(submitHandle)) {
                     const json = await fetch(updateFetch).then(res => res.json());
@@ -24,12 +25,14 @@ export default function processHandle(
                                 fullName: sub["problem"]["name"],
                                 rating: sub["problem"]["rating"],
                                 tags: sub["problem"]["tags"],
-                                verdict: sub["verdict"],
+                                verdict: mapVerdict(sub["verdict"]),
                                 creationTimeSeconds: sub["creationTimeSeconds"],
                             } as Problem;
                         }).filter((sub:any) => sub != null);
-                        console.log(problems);
                         customStorage.updateItem(submitHandle, problems);
+                    }
+                    else {
+                      throw Error(`No user named ${submitHandle}`);
                     }
                 }
                 const displayProblems = customStorage.getItem(submitHandle);
@@ -42,7 +45,9 @@ export default function processHandle(
                 setLoading(false);
               }
           };
-          if(submitHandle != '')
-          fetchData();
+          if(submitHandle != ''){
+            fetchData();
+            localStorage.setItem(submitHandle, submitHandle);
+          }
       }, [submitHandle]);
 }

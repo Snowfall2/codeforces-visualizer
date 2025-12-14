@@ -23,10 +23,10 @@ export default function filterProblem(data: Problem[], verdict: string[]) {
         }
         return problems;
     }, [] as Problem[]);
-    return mapVerdict(problemDistribution);
+    return problemDistribution;
 }
 
-function mapVerdict(data: Problem[]) {
+export function mapVerdict(data: string) {
     const label: Record<string, string> = {
         "FAILED":"Failed",
         "OK":"Accepted",
@@ -46,6 +46,6 @@ function mapVerdict(data: Problem[]) {
         "REJECTED":"Rejected",
         "SUBMITTED":"Submitted",
         "NO_VERDICT":"",
-    }
-    return data.map(prob => ({...prob, verdict: label[prob.verdict? prob.verdict:"NO_VERDICT"]}))
+    };
+    return label[data];
 }

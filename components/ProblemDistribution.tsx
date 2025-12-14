@@ -14,7 +14,7 @@ export default function ProblemDistribution(
         series: [{ data: [0] }],
         height: 300,
     };
-    const verdict = ["OK"];
+    const verdict = ["Accepted"];
     const [plot, setPlot] = useState(data);
     
     useEffect(() => {

@@ -46,7 +46,6 @@ export default function TagDistribution(
             tagAcceptNumber.push(problems.filter(problem => (problem.tags.includes(tag) && problem.verdict == "Accepted")).length)
             tagRejectNumber.push(problems.filter(problem => (problem.tags.includes(tag) && problem.verdict != "Accepted")).length)
         })
-        tags
         setPlot({
             xAxis: [{id: 'barCategories', data: tags, tickLabelStyle: {
             }}],
