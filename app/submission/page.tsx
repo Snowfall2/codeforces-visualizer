@@ -4,6 +4,7 @@ import Problem from '@/interfaces/problem';
 import processHandle from '@/hooks/processHandle';
 import SearchSidebar from '@/components/submission/SearchSidebar';
 import ProblemList from '@/components/submission/ProblemList';
+import Loading from '@/components/Loading';
 
 export default function SubmissionPage() {
     const [submitHandle, setSubmitHandle] = useState('');
@@ -18,15 +19,19 @@ export default function SubmissionPage() {
     processHandle(setLoading, setProblems, submitHandle);
     
     return (
-      <div className='flex flex-row mx-10'>
-        <div className='w-1/3'>
+      <div className='flex md:flex-row flex-col mx-auto px-8'>
+        <div className='md:w-1/3'>
           <SearchSidebar submitHandle={setSubmitHandle} submitTags={setTags} submitRange={setRange}/>
         </div>
-        <div className='w-2/3 p-2'>
-          <div className='pagination'>
+        {
+          loading? 
+          <div className='md:w-2/3 p-2 self-center'>
+            <Loading loading={loading}/>
+          </div>:
+          <div className='md:w-2/3 p-2'>
             <ProblemList problems={filterProblems} tags={tags}/>
           </div>
-        </div>
+        }
       </div>
     
   );

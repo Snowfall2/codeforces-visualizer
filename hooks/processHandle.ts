@@ -31,6 +31,9 @@ export default function processHandle(
                         }).filter((sub:any) => sub != null);
                         customStorage.updateItem(submitHandle, problems);
                     }
+                    else {
+                      throw Error(`No user named ${submitHandle}`);
+                    }
                 }
                 const displayProblems = customStorage.getItem(submitHandle);
                 setProblems(displayProblems);

@@ -45,8 +45,8 @@ export default function SearchSidebar({submitHandle, submitTags, submitRange}: {
     }
 
     return (
-        <div className="max-w-2xl pr-10">
-            <form className="flex flex-col max-w-lg gap-6 my-auto" onSubmit={submitSearch}>
+        <div className="max-w-2xl md:mr-10">
+            <form className="flex flex-col gap-6 my-auto" onSubmit={submitSearch}>
                 <TextField label="Handle" className="" id="handle-input" variant='standard' onChange={(e) => setHandle(e.target.value)}/>
 
                 <div>

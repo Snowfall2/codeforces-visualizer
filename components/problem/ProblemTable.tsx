@@ -1,4 +1,3 @@
-
 import { DataGrid, GridColDef, GridRenderCellParams  } from '@mui/x-data-grid';
 import Problem from '../../interfaces/problem';
 import filterProblem from "@/utils/problemUtils";
@@ -15,6 +14,8 @@ const getVerdictClass = (verdict: string) => {
     case 'Memory Limit Exceeded':
       return 'bg-orange-100 text-orange-700';
     case 'Runtime Error':
+      return 'bg-yellow-100 text-yellow-700';
+    case 'Compilation Error':
       return 'bg-yellow-100 text-yellow-700';
     default:
       return '';
