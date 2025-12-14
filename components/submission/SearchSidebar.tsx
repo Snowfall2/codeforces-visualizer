@@ -3,7 +3,11 @@ import { Fragment, useState } from "react";
 import Badge from "./Badge";
 import TAGS from "@/utils/tags";
 
-export default function SearchSidebar() {
+export default function SearchSidebar({submitHandle, submitTags, submitRange}: {
+    submitHandle: React.Dispatch<React.SetStateAction<string>>,
+    submitTags: React.Dispatch<React.SetStateAction<string[]>>,
+    submitRange: React.Dispatch<React.SetStateAction<number[]>>,
+}) {
     const [handle, setHandle] = useState("");
     const [range, setRange] = useState([800, 3700] as number[]);
     const [tag, setTag] = useState("");
@@ -14,7 +18,11 @@ export default function SearchSidebar() {
         stringify: (tag:string) => tag,
     });
 
-    function submitSearch() {
+    function submitSearch(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        submitHandle(handle);
+        submitTags(tags);
+        submitRange(range);
     }
     function handleRange(event: Event, newValue: number[]) {
         setRange(newValue);
@@ -38,9 +46,9 @@ export default function SearchSidebar() {
 
     return (
         <div className="max-w-2xl pr-10">
-            <form className="flex flex-col max-w-lg gap-6 my-auto" onSubmit={() => submitSearch()}>
+            <form className="flex flex-col max-w-lg gap-6 my-auto" onSubmit={submitSearch}>
                 <TextField label="Handle" className="" id="handle-input" variant='standard' onChange={(e) => setHandle(e.target.value)}/>
-                
+
                 <div>
                     <p className="mb-2">Difficulty range</p>
                     <div className="flex flex-row gap-5 items-center">
@@ -86,6 +94,7 @@ export default function SearchSidebar() {
                         {tags.map((tag) => <Fragment key={tag}><Badge tag={tag} removeTag={handleRemoveTag}></Badge></Fragment>)}
                     </div>
                 </div>
+                <button className="handle-submit my-4 cursor-pointer">Submit</button>
             </form>
         </div>
     );

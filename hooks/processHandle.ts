@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Problem from "@/interfaces/problem";
 import { customStorage } from '@/utils/storage';
+import { mapVerdict } from "@/utils/problemUtils";
 
 export default function processHandle(
     setLoading:React.Dispatch<React.SetStateAction<boolean>>,
@@ -24,11 +25,10 @@ export default function processHandle(
                                 fullName: sub["problem"]["name"],
                                 rating: sub["problem"]["rating"],
                                 tags: sub["problem"]["tags"],
-                                verdict: sub["verdict"],
+                                verdict: mapVerdict(sub["verdict"]),
                                 creationTimeSeconds: sub["creationTimeSeconds"],
                             } as Problem;
                         }).filter((sub:any) => sub != null);
-                        console.log(problems);
                         customStorage.updateItem(submitHandle, problems);
                     }
                 }
