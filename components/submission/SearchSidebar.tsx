@@ -1,25 +1,39 @@
-import { Slider, TextField } from "@mui/material";
+import { Autocomplete, createFilterOptions, Slider, TextField } from "@mui/material";
 import { Fragment, useState } from "react";
 import Badge from "./Badge";
+import TAGS from "@/utils/tags";
 
 export default function SearchSidebar() {
     const [handle, setHandle] = useState("");
     const [range, setRange] = useState([800, 3700] as number[]);
     const [tag, setTag] = useState("");
     const [tags, setTags] = useState([] as string[]);
+    const filterOptions = createFilterOptions({
+        matchFrom: 'any',
+        limit: 5,
+        stringify: (tag:string) => tag,
+    });
+
     function submitSearch() {
     }
     function handleRange(event: Event, newValue: number[]) {
         setRange(newValue);
     }
     function handleTagKeyDown(event:any) {
-        
-        if(event.key == "Enter") {
-            if (!tags.includes(tag)) setTags([...tags, tag]);
+        if(event.key === "Enter") {
+            event.preventDefault();
+            addTag(tag);
         }
     }
     function handleRemoveTag(removeTag: string) {
         setTags(tags.filter((tag) => tag != removeTag));
+    }
+
+    function addTag(newTag: string) {
+        if(!tags.includes(newTag) && TAGS.includes(newTag)) {
+            setTags([...tags, newTag]);
+        }
+        setTag("");
     }
 
     return (
@@ -33,11 +47,9 @@ export default function SearchSidebar() {
                         <span>{range[0]}</span>
                         <Slider
                             value={range}
-                            marks
                             min={800}
                             max={3700}
                             step={100}
-                            aria-label="Default"
                             valueLabelDisplay="auto"
                             onChange={handleRange}
                         />
@@ -45,18 +57,36 @@ export default function SearchSidebar() {
                     </div>
                 </div>
 
-                <div>
-                    <div className="flex flex-row gap-5 items-center mb-4">
-                        <TextField label="Tag" className="" id="handle-input" variant='standard' 
-                            onChange={(e) => setTag(e.target.value)}
+                <Autocomplete
+                    options={TAGS}
+                    value={tag}
+                    inputValue={tag}
+                    filterOptions={filterOptions}
+                    blurOnSelect
+                    disableClearable
+                    freeSolo
+                    onInputChange={(event, value) => {
+                        setTag(value);
+                    }}
+                    onChange={(event, value) => {
+                        addTag(value?? "");
+                    }}
+                    renderInput={(params) => (
+                        <TextField 
+                            {...params} 
+                            label="Tag" 
+                            variant='standard' 
                             onKeyDown={handleTagKeyDown}
                         />
-                    </div>
+                    )}
+                />
+                
+                <div>
                     <div className="flex flex-row gap-2 flex-wrap">
                         {tags.map((tag) => <Fragment key={tag}><Badge tag={tag} removeTag={handleRemoveTag}></Badge></Fragment>)}
                     </div>
                 </div>
             </form>
         </div>
-    )
+    );
 }
