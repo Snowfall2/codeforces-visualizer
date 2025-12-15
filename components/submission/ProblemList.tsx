@@ -68,7 +68,6 @@ export default function ProblemList({problems, tags}: {problems:Problem[], tags:
     return (
         <div className="flex flex-col gap-10">
             {
-                maxPage > 0 &&
                 <div className="flex gap-4 items-center">
                     <TextField
                         value={search}
