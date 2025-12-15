@@ -19,7 +19,7 @@ export default function SubmissionPage() {
     processHandle(setLoading, setProblems, submitHandle);
     
     return (
-      <div className='flex md:flex-row flex-col mx-auto px-8'>
+      <div className='flex md:flex-row flex-col mx-auto px-6'>
         <div className='md:w-1/3'>
           <SearchSidebar submitHandle={setSubmitHandle} submitTags={setTags} submitRange={setRange}/>
         </div>
