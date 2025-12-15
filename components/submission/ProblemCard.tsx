@@ -40,7 +40,10 @@ const getRatingClass = (rating: number) => {
 export default function ProblemCard({problem, tags}: {problem:Problem, tags:string[]}) {
     return (
         <div className="flex flex-col gap-2 p-4 bg-white border white rounded-4xl">
-            <h2 className="text-2xl">{problem.fullName}</h2>
+            <div>
+              <h2 className="text-2xl">{problem.fullName}</h2>
+              <h3 className="text-lg">{problem.contest + problem.index}</h3>
+            </div>
             <div className="flex flex-row gap-2 flex-wrap">
                 {problem.tags.map((tag, idx) => 
                     <Fragment key={tag+idx}>
@@ -52,11 +55,11 @@ export default function ProblemCard({problem, tags}: {problem:Problem, tags:stri
             <p>Status: <span className={getVerdictClass(problem.verdict??"")}>{problem.verdict}</span> </p>
             <div className="flex max-md:flex-col gap-2 justify-between">
                 <p>Submission Time: {new Date(problem.creationTimeSeconds * 1000).toLocaleString()}</p>
-                <div className='flex problem-redirect px-5 py-1 max-md:py-2 justify-center items-center rounded-xl transition duration-300 text-black hover:text-yellow-200 cursor-pointer'>
-                    <a href={`https://codeforces.com/contest/${problem.contest}/problem/${problem.index}`} className='' target="_blank">
-                            Open problem
-                    </a>
-                </div>
+                  <a href={`https://codeforces.com/contest/${problem.contest}/problem/${problem.index}`} className='' target="_blank">
+                    <div className='flex problem-redirect px-5 py-1 max-md:py-2 justify-center items-center rounded-xl transition duration-300 text-black hover:text-yellow-200 cursor-pointer'>
+                                Open problem
+                    </div>
+                  </a>
             </div>
             <div></div>
         </div>
